@@ -14,10 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         solwindow.cpp \
-    card.cpp
+    card.cpp \
+    deck.cpp
 
 HEADERS  += solwindow.h \
-    card.h
+    card.h \
+    deck.h
 
 FORMS    += solwindow.ui
 

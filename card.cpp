@@ -1,14 +1,21 @@
 #include "card.h"
 
 //Public
-Card::Card(const QString& text, QWidget* parent)
-    : QLabel(parent)
+Card::Card(int val, QString im, bool isBl, int cardSuit, QWidget *parent):
+    front(im),value(val),isBlack(isBl),suit(cardSuit)
 {
-    setText(text);
-    connect( this, SIGNAL( clicked() ), this, SLOT( slotClicked() ) );
+    setParent(parent);
+    setFixedSize(71,96);
+    setPixmap(front);
+    //setText("Testing");
+    isFaceUp = false;
+    connect(this,SIGNAL(clicked()),this,SLOT(onClick()));
 }
 Card::~Card(){
 
+}
+void Card::flip(){
+    isFaceUp = !isFaceUp;
 }
 Card *Card::operator =(Card *c){
     return c;
@@ -17,10 +24,11 @@ Card *Card::operator =(Card *c){
 //Protected
 void Card::mousePressEvent(QMouseEvent* event)
 {
+    //signal
     emit clicked();
 }
 //Public Slots
-void Card::slotClicked(){
+void Card::onClick(){
     move(this->x()+20,this->y()+20);
     //    this->raise();
 }
