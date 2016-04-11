@@ -7,9 +7,14 @@ SolWindow::SolWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     deck = new Deck(this);
+    drawBoxes();
 }
 
 SolWindow::~SolWindow()
 {
     delete ui;
+}
+
+void SolWindow::drawBoxes(){
+
 }

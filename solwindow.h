@@ -10,10 +10,10 @@ class SolWindow;
 class SolWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     explicit SolWindow(QWidget *parent = 0);
     ~SolWindow();
+    void drawBoxes();
     Deck *deck;
 
 private:

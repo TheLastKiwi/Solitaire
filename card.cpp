@@ -1,5 +1,5 @@
 #include "card.h"
-
+#include "QMouseEvent"
 //Public
 Card::Card(int val, QString im, bool isBl, int cardSuit, QWidget *parent):
     front(im),value(val),isBlack(isBl),suit(cardSuit)
@@ -25,7 +25,9 @@ Card *Card::operator =(Card *c){
 void Card::mousePressEvent(QMouseEvent* event)
 {
     //signal
+    if(event->button() == Qt::LeftButton){
     emit clicked();
+    }
 }
 //Public Slots
 void Card::onClick(){

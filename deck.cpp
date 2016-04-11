@@ -60,7 +60,7 @@ Deck::Deck(QWidget *parent)
     for(int i = 0; i < 52; i++){
                             //value        image                isBlack    suit  parent
         deck[i] = new Card((i%13)+1,cardResourceStrings[i],((i/13)%2)==0,(i/13),parent);
-        deck[i]->move(48*(i%13),(i/13)*35);//displays them pretty
+        deck[i]->move(48*(i%13),(i/13+3)*35);//displays them pretty
         deck[i]->show();
         //deck[i] = new Card(parent);
     }
