@@ -35,3 +35,7 @@ Pile::~Pile(){
         delete stack[i];
     }
 }
+void Pile::movePile(int xPos, int yPos){
+    x=xPos;
+    y=yPos;
+}

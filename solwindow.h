@@ -20,6 +20,9 @@ public:
     int gameID = 1;
 private:
     void resetField();
+    void initKlondike();
+    void initSpider();
+    void initFreecell();
 protected:
     void paintEvent(QPaintEvent *event);
 

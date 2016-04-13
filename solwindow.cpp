@@ -20,16 +20,16 @@ SolWindow::SolWindow(QWidget *parent) :
 
     deck = new Deck(this);
     deck->shuffle(52);
-    fDown = new Pile(20,20);
+    fDown = new Pile(20,30);
 
 
 
-    //initialize field for 8 piles
+    //initialize field for 10 piles
     for(int i = 20;i < 820; i+=80){
         field[i/80] = new Pile(i,111);
     }
 
-    on_actionNew_Game_triggered();
+    on_actionFreeCell_triggered();
 
 }
 
@@ -44,13 +44,31 @@ void SolWindow::drawBoxes(){
     brush.setColor(Qt::black);
     painter.setBrush(brush);
 
-   // painter.setBrush(QBrush();
-    for(int i = 10; i < 640; i+=80)
-    {
-        if(i == 330) i+=15;
-        QRect r(i,20,71,96);
-        painter.drawRect(r);
+    switch (gameID)  {
+    case 0: //klondike
+
+        for(int i = 345; i < 640; i+=80)
+        {
+
+            QRect r(i,30,71,96);
+            painter.drawRect(r);
+        }
+        update();
+    break;
+    case 1: //freeCell
+        for(int i = 10; i < 640; i+=80)
+        {
+            if(i == 330) i+=15;
+            QRect r(i,30,71,96);
+            painter.drawRect(r);
+        }
+        update();
+        break;
+    case 2: //spider
+        update();
+        break;
     }
+
 }
 void SolWindow::paintEvent(QPaintEvent *event){
 
@@ -108,6 +126,8 @@ void SolWindow::resetField(){
 
 void SolWindow::on_actionKlondike_triggered()
 {
+    //684x485 or 684x666
+    initKlondike();
     delete deck;
     deck = new Deck(this);
     gameID = 0;
@@ -116,6 +136,9 @@ void SolWindow::on_actionKlondike_triggered()
 
 void SolWindow::on_actionFreeCell_triggered()
 {
+
+    //684x485
+    initFreecell();
     delete deck;
     deck = new Deck(this);
     gameID = 1;
@@ -124,9 +147,8 @@ void SolWindow::on_actionFreeCell_triggered()
 
 void SolWindow::on_actionEasy_triggered()
 {
-    //delete every card in the deck
-    //104 cards
-    //generate new cards all same suit
+    //846x688
+    initSpider();
     delete deck;
     deck = new Deck(0,this);
     gameID = 2;
@@ -138,6 +160,7 @@ void SolWindow::on_actionMedium_triggered()
     //delete every card in the deck
     //104 cards
     //generate new cards 2x 2 suits
+    initSpider();
     delete deck;
     deck = new Deck(1,this);
     gameID = 2;
@@ -149,8 +172,40 @@ void SolWindow::on_actionHard_triggered()
     //delete every card in the deck
     //104 cards
     //generate new cards 2 full decks
+    initSpider();
     delete deck;
     deck = new Deck(2,this);
     gameID = 2;
     on_actionNew_Game_triggered();
+}
+
+void SolWindow::initKlondike(){
+    for(int i = 20;i < 660; i+=80){
+        field[i/80]->movePile(i,120);
+    }
+    field[8]->movePile(-100,0);
+    field[9]->movePile(-100,0);
+
+    setWindowTitle("Klondike");
+    setMinimumSize(684,485);
+    setMaximumWidth(684);
+}
+
+void SolWindow::initSpider(){
+    for(int i = 20;i < 820; i+=80){
+        field[i/80]->movePile(i,20);
+    }
+    setWindowTitle("Spider");
+    setMinimumSize(846,485);
+    setMaximumWidth(846);
+}
+
+void SolWindow::initFreecell(){
+    for(int i = 20;i < 660; i+=80){
+        field[i/80]->movePile(i,120);
+    }
+    field[8]->movePile(-100,0);
+    field[9]->movePile(-100,0);
+    setWindowTitle("Freecell");
+    setFixedSize(684,485);
 }

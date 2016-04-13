@@ -11,14 +11,15 @@ class Pile
 private:
 
     Card *stack[52];
-    const int x;
-    const int y;
+    int x;
+    int y;
 public:
 
     int cardsInPile = 0;
     void moveCard(Pile *toPile, Card *c);
     Card *getTopCard();
     void addCard(Card *c, bool deck);
+    void movePile(int xPos, int yPos);
     Pile(int x, int y);
     Pile();
     ~Pile();
