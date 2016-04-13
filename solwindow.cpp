@@ -83,8 +83,10 @@ void SolWindow::on_actionNew_Game_triggered()
         break;
     case 2: //spider
         //make all face down
+        fDown->cardsInPile=0;
         deck->reset(104,false);
-        deck->shuffle(104);
+        for(int i = 0; i < 10; i++)
+            deck->shuffle(104);
         for(int i = 0; i < 10; i++){
             if(i<4)
                 deck->dealX(field[i],6,false);
@@ -106,12 +108,16 @@ void SolWindow::resetField(){
 
 void SolWindow::on_actionKlondike_triggered()
 {
+    delete deck;
+    deck = new Deck(this);
     gameID = 0;
     on_actionNew_Game_triggered();
 }
 
 void SolWindow::on_actionFreeCell_triggered()
 {
+    delete deck;
+    deck = new Deck(this);
     gameID = 1;
     on_actionNew_Game_triggered();
 }
@@ -132,6 +138,7 @@ void SolWindow::on_actionMedium_triggered()
     //delete every card in the deck
     //104 cards
     //generate new cards 2x 2 suits
+    delete deck;
     deck = new Deck(1,this);
     gameID = 2;
     on_actionNew_Game_triggered();
@@ -142,6 +149,7 @@ void SolWindow::on_actionHard_triggered()
     //delete every card in the deck
     //104 cards
     //generate new cards 2 full decks
+    delete deck;
     deck = new Deck(2,this);
     gameID = 2;
     on_actionNew_Game_triggered();

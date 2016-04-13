@@ -7,7 +7,7 @@ Deck::Deck(QWidget *parent)
     for(int i = 0; i < 52; i++){
                             //value        image                isBlack    suit  parent
         deck[i] = new Card((i%13)+1,cardResourceStrings[i],((i/13)%2)==1,(i/13),parent);
-        deck[i]->hide();
+        deck[i]->show();
 
         //deck[i] = new Card(parent);
     }
@@ -22,32 +22,27 @@ Deck::Deck(int n,QWidget *parent)
         for(int j = 0; j < 8; j++){
             for(int i = 39; i < 52; i++){
                 deck[(j*13)+(i-39)] = new Card((i%13)+1,cardResourceStrings[i],((i/13)%2)==1,(i/13),parent);
+                deck[(j*13)+(i-39)]->show();
             }
         }
+        break;
     case 1: //medium
         for(int j = 0; j < 4; j++){
             for(int i = 26; i < 52; i++){
                 deck[(j*26)+(i-26)] = new Card((i%13)+1,cardResourceStrings[i],((i/13)%2)==1,(i/13),parent);
+                deck[(j*26)+(i-26)]->show();
             }
         }
+        break;
     case 2: //hard
         for(int j = 0; j < 2; j++){
             for(int i = 0; i < 52; i++){
                 deck[(j*52)+(i)] = new Card((i%13)+1,cardResourceStrings[i],((i/13)%2)==1,(i/13),parent);
+                deck[(j*52)+(i)]->show();
             }
         }
     }
 
-
-    for(int i = 0; i < 52; i++){
-                            //value        image                isBlack    suit  parent
-        deck[i] = new Card((i%13)+1,cardResourceStrings[i],((i/13)%2)==1,(i/13),parent);
-        deck[i]->hide();
-
-        //deck[i] = new Card(parent);
-    }
-    cardsInDeck=52;
-    qsrand(seed.nsecsElapsed());
 }
 
 void Deck::reset(int n, bool setFaceUp){
@@ -88,7 +83,8 @@ void Deck::shuffle(int n){
 
 }
 Deck::~Deck(){
-    for(int i = 0; i < 52; i++){
+    int n = deck[52]==deck[53]?52:104;
+    for(int i = 0; i < n; i++){
         delete deck[i];
     }
 }
