@@ -23,7 +23,70 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuGame">
+    <property name="title">
+     <string>Game</string>
+    </property>
+    <addaction name="actionNew_Game"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <widget class="QMenu" name="menuSpider">
+     <property name="title">
+      <string>Spider</string>
+     </property>
+     <addaction name="actionEasy"/>
+     <addaction name="actionMedium"/>
+     <addaction name="actionHard"/>
+    </widget>
+    <addaction name="actionKlondike"/>
+    <addaction name="menuSpider"/>
+    <addaction name="actionFreeCell"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+   </widget>
+   <addaction name="menuGame"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuHelp"/>
   </widget>
+  <action name="actionNew_Game">
+   <property name="text">
+    <string>New Game</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionKlondike">
+   <property name="text">
+    <string>Klondike</string>
+   </property>
+  </action>
+  <action name="actionFreeCell">
+   <property name="text">
+    <string>FreeCell</string>
+   </property>
+  </action>
+  <action name="actionEasy">
+   <property name="text">
+    <string>Easy</string>
+   </property>
+  </action>
+  <action name="actionMedium">
+   <property name="text">
+    <string>Medium</string>
+   </property>
+  </action>
+  <action name="actionHard">
+   <property name="text">
+    <string>Hard</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

@@ -2,7 +2,7 @@
 #define CARD_H
 
 #include <QLabel>
-//class Pile; //use if using pile down below
+class Pile; //use if using pile down below
 class Card : public QLabel
 {
     Q_OBJECT
@@ -19,15 +19,21 @@ private:
     const QString front;
     const QString back = ":/Back/CardPics/Back.png";
     bool isFaceUp;
-    //    int posInPile;
-    //    Pile *pileIn;
+    int posInPile;
+    Pile *pileIn;
 
 signals:
     void clicked();
+    void rClick();
+    void lClick();
 protected:
     void mousePressEvent(QMouseEvent* event);
 public slots:
     void onClick();
+    void onRClick();
+    void onLClick();
+friend class Pile;
+friend class Deck;
 };
 
 #endif // CARD_H

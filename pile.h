@@ -3,17 +3,26 @@
 
 
 #include "card.h"
+#include <iostream>
+
 //class Card;
 class Pile
 {
 private:
-    int cardsInPile;
+
     Card *stack[52];
+    const int x;
+    const int y;
 public:
-    void moveCard(Pile *toPile);
+
+    int cardsInPile = 0;
+    void moveCard(Pile *toPile, Card *c);
     Card *getTopCard();
-    void addCard(Card *c);
+    void addCard(Card *c, bool deck);
+    Pile(int x, int y);
     Pile();
+    ~Pile();
+
 };
 
 #endif // PILE_H

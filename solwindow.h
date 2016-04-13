@@ -15,6 +15,27 @@ public:
     ~SolWindow();
     void drawBoxes();
     Deck *deck;
+    Pile *fDown;
+    Pile *field[10];
+    int gameID = 1;
+private:
+    void resetField();
+protected:
+    void paintEvent(QPaintEvent *event);
+
+private slots:
+
+    void on_actionNew_Game_triggered();
+
+    void on_actionKlondike_triggered();
+
+    void on_actionFreeCell_triggered();
+
+    void on_actionEasy_triggered();
+
+    void on_actionMedium_triggered();
+
+    void on_actionHard_triggered();
 
 private:
     Ui::SolWindow *ui;

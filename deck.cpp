@@ -1,79 +1,90 @@
 #include "deck.h"
-
+#include "QElapsedTimer"
+#include "pile.h"
 Deck::Deck(QWidget *parent)
 {
-    const QString cardResourceStrings[52] = {
-        ":/Faces/CardPics/101.png",
-        ":/Faces/CardPics/102.png",
-        ":/Faces/CardPics/103.png",
-        ":/Faces/CardPics/104.png",
-        ":/Faces/CardPics/105.png",
-        ":/Faces/CardPics/106.png",
-        ":/Faces/CardPics/107.png",
-        ":/Faces/CardPics/108.png",
-        ":/Faces/CardPics/109.png",
-        ":/Faces/CardPics/110.png",
-        ":/Faces/CardPics/111.png",
-        ":/Faces/CardPics/112.png",
-        ":/Faces/CardPics/113.png",
-        ":/Faces/CardPics/114.png",
-        ":/Faces/CardPics/115.png",
-        ":/Faces/CardPics/116.png",
-        ":/Faces/CardPics/117.png",
-        ":/Faces/CardPics/118.png",
-        ":/Faces/CardPics/119.png",
-        ":/Faces/CardPics/120.png",
-        ":/Faces/CardPics/121.png",
-        ":/Faces/CardPics/122.png",
-        ":/Faces/CardPics/123.png",
-        ":/Faces/CardPics/124.png",
-        ":/Faces/CardPics/125.png",
-        ":/Faces/CardPics/126.png",
-        ":/Faces/CardPics/127.png",
-        ":/Faces/CardPics/128.png",
-        ":/Faces/CardPics/129.png",
-        ":/Faces/CardPics/130.png",
-        ":/Faces/CardPics/131.png",
-        ":/Faces/CardPics/132.png",
-        ":/Faces/CardPics/133.png",
-        ":/Faces/CardPics/134.png",
-        ":/Faces/CardPics/135.png",
-        ":/Faces/CardPics/136.png",
-        ":/Faces/CardPics/137.png",
-        ":/Faces/CardPics/138.png",
-        ":/Faces/CardPics/139.png",
-        ":/Faces/CardPics/140.png",
-        ":/Faces/CardPics/141.png",
-        ":/Faces/CardPics/142.png",
-        ":/Faces/CardPics/143.png",
-        ":/Faces/CardPics/144.png",
-        ":/Faces/CardPics/145.png",
-        ":/Faces/CardPics/146.png",
-        ":/Faces/CardPics/147.png",
-        ":/Faces/CardPics/148.png",
-        ":/Faces/CardPics/149.png",
-        ":/Faces/CardPics/150.png",
-        ":/Faces/CardPics/151.png",
-        ":/Faces/CardPics/152.png"
-    };
 
     for(int i = 0; i < 52; i++){
                             //value        image                isBlack    suit  parent
-        deck[i] = new Card((i%13)+1,cardResourceStrings[i],((i/13)%2)==0,(i/13),parent);
-        deck[i]->move(48*(i%13),(i/13+3)*35);//displays them pretty
-        deck[i]->show();
+        deck[i] = new Card((i%13)+1,cardResourceStrings[i],((i/13)%2)==1,(i/13),parent);
+        deck[i]->hide();
+
         //deck[i] = new Card(parent);
     }
     cardsInDeck=52;
+    qsrand(seed.nsecsElapsed());
 }
 
-void Deck::dealX(int n){
+Deck::Deck(int n,QWidget *parent)
+{
+    switch (n){
+    case 0: // easy
+        for(int j = 0; j < 8; j++){
+            for(int i = 39; i < 52; i++){
+                deck[(j*13)+(i-39)] = new Card((i%13)+1,cardResourceStrings[i],((i/13)%2)==1,(i/13),parent);
+            }
+        }
+    case 1: //medium
+        for(int j = 0; j < 4; j++){
+            for(int i = 26; i < 52; i++){
+                deck[(j*26)+(i-26)] = new Card((i%13)+1,cardResourceStrings[i],((i/13)%2)==1,(i/13),parent);
+            }
+        }
+    case 2: //hard
+        for(int j = 0; j < 2; j++){
+            for(int i = 0; i < 52; i++){
+                deck[(j*52)+(i)] = new Card((i%13)+1,cardResourceStrings[i],((i/13)%2)==1,(i/13),parent);
+            }
+        }
+    }
 
-}
-void Deck::dealAll(){
 
+    for(int i = 0; i < 52; i++){
+                            //value        image                isBlack    suit  parent
+        deck[i] = new Card((i%13)+1,cardResourceStrings[i],((i/13)%2)==1,(i/13),parent);
+        deck[i]->hide();
+
+        //deck[i] = new Card(parent);
+    }
+    cardsInDeck=52;
+    qsrand(seed.nsecsElapsed());
 }
-void Deck::shuffle(){
+
+void Deck::reset(int n, bool setFaceUp){
+    cardsInDeck = n;
+    for(int i = 0; i < n; i++){
+        if (deck[i]->isFaceUp != setFaceUp) deck[i]->flip();
+    }
+}
+
+void Deck::dealX(Pile *p, int n, bool d){
+    for(int i = 0; i < n; i++){
+        p->addCard(deck[--cardsInDeck],d);
+        p->getTopCard()->raise();
+
+    }
+}
+void Deck::dealAll(Pile *field[],int n){
+    for(int i = 0; i < 52; i++){
+        field[i % n]->addCard(deck[i],false);
+
+//    deck[i]->move(70*(i%13),(i/13+1)*95);//displays them pretty
+    deck[i]->show();
+    deck[i]->raise();
+    }
+}
+void Deck::shuffle(int n){
+    Card *c;
+    int swapPos;
+
+    for(int i = 0; i < n; i++){
+
+       swapPos = qrand()%n;
+
+       c = deck[i];
+       deck[i] = deck[swapPos];
+       deck[swapPos] = c;
+    }
 
 }
 Deck::~Deck(){
