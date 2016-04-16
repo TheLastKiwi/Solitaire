@@ -79,10 +79,10 @@ void SolWindow::paintEvent(QPaintEvent *event){
 
 void SolWindow::on_actionNew_Game_triggered()
 {
+    fDown->cardsInPile=0;
     resetField();
     switch(gameID){
         case 0://klondike
-        fDown->cardsInPile = 0;
         deck->reset(52,false);
         deck->shuffle(52);
         //make all face down
@@ -101,7 +101,7 @@ void SolWindow::on_actionNew_Game_triggered()
         break;
     case 2: //spider
         //make all face down
-        fDown->cardsInPile=0;
+
         deck->reset(104,false);
         for(int i = 0; i < 10; i++)
             deck->shuffle(104);
@@ -122,6 +122,7 @@ void SolWindow::resetField(){
         if (field[i])
         field[i]->cardsInPile = 0;
     }
+    moving->cardsInPile = 0;
 }
 
 void SolWindow::on_actionKlondike_triggered()
@@ -180,8 +181,10 @@ void SolWindow::on_actionHard_triggered()
 }
 
 void SolWindow::initKlondike(){
+    fDown->cardsInPile = 0;
+    fDown->movePile(20,30);
     for(int i = 20;i < 660; i+=80){
-        field[i/80]->movePile(i,120);
+        field[i/80]->movePile(i,140);
     }
     field[8]->movePile(-100,0);
     field[9]->movePile(-100,0);
@@ -192,20 +195,23 @@ void SolWindow::initKlondike(){
 }
 
 void SolWindow::initSpider(){
+    fDown->cardsInPile = 0;
     for(int i = 20;i < 820; i+=80){
-        field[i/80]->movePile(i,20);
+        field[i/80]->movePile(i,40);
     }
+    fDown->movePile(765,380);
     setWindowTitle("Spider");
     setMinimumSize(846,485);
     setMaximumWidth(846);
 }
 
 void SolWindow::initFreecell(){
+    fDown->cardsInPile = 0;
     for(int i = 20;i < 660; i+=80){
-        field[i/80]->movePile(i,120);
+        field[i/80]->movePile(i,140);
     }
     field[8]->movePile(-100,0);
     field[9]->movePile(-100,0);
     setWindowTitle("Freecell");
-    setFixedSize(684,485);
+    setFixedSize(674,485);
 }

@@ -5,6 +5,9 @@
 #include "card.h"
 #include "QWidget"
 #include "QElapsedTimer"
+
+
+class SolWindow;
 class Pile;
 class Deck
 {
@@ -73,8 +76,8 @@ public:
     void dealAll(Pile *field[],int n);
     void shuffle(int n);
     void reset(int n, bool setFaceUp);
-    Deck(QWidget *parent);
-    Deck(int n, QWidget *parent);
+    Deck(SolWindow *parent);
+    Deck(int n, SolWindow *parent);
     ~Deck();
 
 };

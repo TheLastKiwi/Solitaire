@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "deck.h"
+#include "pile.h"
 namespace Ui {
 class SolWindow;
 }
@@ -18,6 +19,7 @@ public:
     Pile *fDown;
     Pile *field[10];
     int gameID = 1;
+    Pile *moving= new Pile(-100,-100);
 private:
     void resetField();
     void initKlondike();

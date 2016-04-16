@@ -1,7 +1,7 @@
 #include "deck.h"
 #include "QElapsedTimer"
 #include "pile.h"
-Deck::Deck(QWidget *parent)
+Deck::Deck(SolWindow *parent)
 {
 
     for(int i = 0; i < 52; i++){
@@ -15,7 +15,7 @@ Deck::Deck(QWidget *parent)
     qsrand(seed.nsecsElapsed());
 }
 
-Deck::Deck(int n,QWidget *parent)
+Deck::Deck(int n,SolWindow *parent)
 {
     switch (n){
     case 0: // easy
@@ -63,7 +63,6 @@ void Deck::dealAll(Pile *field[],int n){
     for(int i = 0; i < 52; i++){
         field[i % n]->addCard(deck[i],false);
 
-//    deck[i]->move(70*(i%13),(i/13+1)*95);//displays them pretty
     deck[i]->show();
     deck[i]->raise();
     }
