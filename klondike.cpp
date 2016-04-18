@@ -16,6 +16,7 @@ void Klondike::setup(){//inital field
 
     fDown->movePile(20,30); //moves deck to top left
     fDown->isDeckStyle = true;
+    fUpPile->isDeckStyle = true;
 
     //sets window size and title
     board->setWindowTitle("Klondike");
@@ -32,18 +33,47 @@ void Klondike::setup(){//inital field
 
 }
 
-
-
-
-void Klondike::deal(){ //spider 1 to each, klondike is 3 up top
+void Klondike::flipOver(){
+    for(int i = fUpPile->cardsInPile-1; i >=0; i--){
+        fUpPile->stack[i]->flip();
+        fDown->addCard(fUpPile->stack[i],true);
+    }
+    fUpPile->cardsInPile = 0;
 
 }
 
+
+void Klondike::deal(){ //spider 1 to each, klondike is 3 up top
+    for(int i = 0; i < fUpPile->cardsInPile; i++){
+        fUpPile->stack[i]->move(100,30);
+    }
+    int dealCards = std::min(fDown->cardsInPile,3);
+    int initCards = fDown->cardsInPile;
+    for(int i = initCards-1; i>initCards-1-dealCards;i--){
+        fDown->stack[i]->flip();
+        fDown->moveCard(fUpPile,fDown->stack[i]);
+    }
+    for(int i = 0; i < dealCards; i++){
+        fUpPile->stack[fUpPile->cardsInPile-1-((dealCards-1)-i)]->move(100+20*i,30);
+        fUpPile->getTopCard()->raise();
+    }
+}
+
 bool Klondike::canDrag(Card *c){ //spider same suit, others alternate colors, all must be sequential
+            if(!c->isFaceUp){
+                if(c->pileIn->isDeckStyle){
+                    deal();
+                    return false;
+                }
+                return false;
+            }
+
             if(c->pileIn->getTopCard() == c){
                return true; //if top card it's always movable
             }
             else{
+                //if not the top card
+                if(c->pileIn->isDeckStyle) return false; //if it's a deck style you can't drag it because it's the face up pile of 3s
                 for(int i = c->posInPile; i < c->pileIn->cardsInPile-1;i++){
                     if((c->pileIn->stack[i]->isBlack != c->pileIn->stack[i+1]->isBlack)// && //different color
                         //(pileIn->stack[i]->value - pileIn->stack[i+1]->value)==1) && //one lower value

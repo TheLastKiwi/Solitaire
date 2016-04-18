@@ -21,6 +21,7 @@ public:
         Pile *finished[8]; // the 8 finished piles
 
         void doubleClick(Card *c);
+        void flipOver(){}
     Spider(SolWindow *gameBoard, int i);
 };
 

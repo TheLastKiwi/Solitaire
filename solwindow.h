@@ -15,7 +15,7 @@ public:
     explicit SolWindow(QWidget *parent = 0);
     ~SolWindow();
     void drawBoxes();
-
+    bool isKlondike = false;
 private:
     void resetField();
     void initKlondike();

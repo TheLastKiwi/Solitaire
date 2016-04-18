@@ -11,9 +11,10 @@ class Game
 {
 public:
     SolWindow *board;
-    int gameType = 0; //0 = klondike, 1 = spider, 2 = freecell
+    //int gameType = 0; //0 = klondike, 1 = spider, 2 = freecell
     Deck *deck = 0;
     Pile *fDown = new Pile(-100,-100);
+    virtual void flipOver() = 0;
     Pile *field[10];
     Pile *moving= new Pile(-100,-100);
 

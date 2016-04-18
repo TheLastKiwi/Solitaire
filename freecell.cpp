@@ -29,13 +29,6 @@ void FreeCell::setup(){//inital field
     newGame();
 }
 
-
-
-
-void FreeCell::deal(){ //spider 1 to each, klondike is 3 up top
-    //no deal, all cards are face up to start
-}
-
 bool FreeCell::canDrag(Card *c){ //spider same suit, others alternate colors, all must be sequential
     if(c->pileIn->getTopCard() == c){
        return true; //if top card it's always movable

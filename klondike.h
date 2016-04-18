@@ -16,7 +16,9 @@ public:
     void drawBoxes();
     void newGame();
     void doubleClick(Card *c){}
+    void flipOver();
     Klondike(SolWindow *gameBoard);
+    Pile *fUpPile = new Pile(90,30);
 };
 
 #endif // KLONDIKE_H
