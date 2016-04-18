@@ -3,9 +3,7 @@
 
 
 #include "card.h"
-#include "QWidget"
 #include "QElapsedTimer"
-
 
 class SolWindow;
 class Pile;

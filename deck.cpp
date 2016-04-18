@@ -1,5 +1,4 @@
 #include "deck.h"
-#include "QElapsedTimer"
 #include "pile.h"
 Deck::Deck(SolWindow *parent)
 {
@@ -11,6 +10,8 @@ Deck::Deck(SolWindow *parent)
 
         //deck[i] = new Card(parent);
     }
+    for(int i = 52;i<104;i++) deck[i] =0; //just makes it easier to delete later
+
     cardsInDeck=52;
     qsrand(seed.nsecsElapsed());
 }
@@ -42,7 +43,7 @@ Deck::Deck(int n,SolWindow *parent)
             }
         }
     }
-
+    cardsInDeck = 104;
 }
 
 void Deck::reset(int n, bool setFaceUp){
@@ -82,8 +83,13 @@ void Deck::shuffle(int n){
 
 }
 Deck::~Deck(){
-    int n = deck[52]==deck[53]?52:104;
-    for(int i = 0; i < n; i++){
-        delete deck[i];
+
+    for(int i = 0; i < 104; i++){
+        if(deck[i]){
+            delete deck[i];
+        }
+        else{
+            break;
+        }
     }
 }

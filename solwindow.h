@@ -2,8 +2,7 @@
 #define SOLWINDOW_H
 
 #include <QMainWindow>
-#include "deck.h"
-#include "pile.h"
+class Game;
 namespace Ui {
 class SolWindow;
 }
@@ -12,14 +11,11 @@ class SolWindow : public QMainWindow
 {
     Q_OBJECT
 public:
+    Game *theGame = 0;
     explicit SolWindow(QWidget *parent = 0);
     ~SolWindow();
     void drawBoxes();
-    Deck *deck;
-    Pile *fDown;
-    Pile *field[10];
-    int gameID = 1;
-    Pile *moving= new Pile(-100,-100);
+
 private:
     void resetField();
     void initKlondike();

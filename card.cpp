@@ -4,13 +4,13 @@
 #include "deck.h"
 #include "pile.h"
 #include "solwindow.h"
-
+#include "game.h"
 
 //Public
 Card::Card(int val, QString im, bool isBl, int cardSuit, SolWindow *parent):
     front(im),value(val),isBlack(isBl),suit(cardSuit)
 {
-    gameWindow = parent;
+    theGame = parent->theGame;
     setParent(parent);
     setFixedSize(71,96);
     setPixmap(back);
@@ -38,60 +38,35 @@ Card *Card::operator =(Card *c){
 //Protected
 void Card::mousePressEvent(QMouseEvent* event)
 {
-    std::cout << event->localPos().x() << " " << event->localPos().y() << std::endl;
+    //std::cout << event->localPos().x() << " " << event->localPos().y() << std::endl;
     if(event->button() == Qt::LeftButton){//if left click
-        offset= event->localPos().toPoint(); //set offset of crard position
-        bool movable = true;  //one time variable to determine if the card stack is movable
-        if(pileIn->getTopCard() == this){
-            movable == true; //if top card it's always movable
-        }
-        else{
-            for(int i = posInPile; i < pileIn->cardsInPile-1;i++){
-                if((pileIn->stack[i]->isBlack != pileIn->stack[i+1]->isBlack)){// && //different color
-                    //((pileIn->stack[i]->value - pileIn->stack[i+1]->value)==1)){ //one lower value
-                    continue;
-                }
-                else{
-                    movable = false;
-                    break;
-                }
-            }
+
+
+        if(theGame->canDrag(this)){
+            offset=event->localPos().toPoint();
+            theGame->moving->prev = pileIn;
+            theGame->addMoving(this,event->windowPos().x(),event->windowPos().y());
+
         }
 
-        if (movable){ //so if the stack is movable
-
-
-            //window->moving->movePile(event->windowPos().x()-offset.x(),event->windowPos().y()-offset.y()-20);
-            gameWindow->moving->movePile(event->windowPos().x()-offset.x(),event->windowPos().y()-offset.y());
-            int cardsInPile = pileIn->cardsInPile;
-            prevPile = pileIn;
-            for(int i = posInPile; i < cardsInPile ;i++){
-                //add to moving pile
-                prevPile->stack[i]->prevPile = prevPile; //I'm giving the janitor unfilterd access to the server
-                prevPile->moveCard(gameWindow->moving,prevPile->stack[i]);
-
-            }
-        }
     }
 }
 void Card::mouseMoveEvent(QMouseEvent *ev){                                    //-20 for toolbar
-    gameWindow->moving->movePile(ev->windowPos().x()-offset.x(),ev->windowPos().y()-offset.y());
+
+        theGame->drag(ev->windowPos().x() - offset.x(),ev->windowPos().y() - offset.y());
 }
 
 void Card::mouseReleaseEvent(QMouseEvent *ev){
+    Pile *movingTo = theGame->canDrop(ev->windowPos().toPoint());
+    if(movingTo){
+        theGame->drop(movingTo);
 
-    //always to back to original pile, add logic to add to current pile
-    // if able to based on where cursor is
-    if(prevPile == gameWindow->fDown){ //if it's the deck
-                  //will need to change this for all decks(spider has 5)
-        gameWindow->fDown->addCard(gameWindow->moving->stack[0],true);
+        if(!theGame->moving->prev->isDeck)theGame->flipAfterMove(theGame->moving->prev);
     }
     else{
-        for(int i = 0 ; i < gameWindow->moving->cardsInPile;i++){
-            gameWindow->moving->stack[i]->prevPile->addCard(gameWindow->moving->stack[i],false);
-        }
+        theGame->returnToPile();
     }
-    gameWindow->moving->cardsInPile = 0;
+
 }
 
 //Public Slots

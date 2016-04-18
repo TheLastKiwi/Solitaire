@@ -16,12 +16,19 @@ SOURCES += main.cpp\
         solwindow.cpp \
     card.cpp \
     deck.cpp \
-    pile.cpp
+    pile.cpp \
+    spider.cpp \
+    klondike.cpp \
+    freecell.cpp
 
 HEADERS  += solwindow.h \
     card.h \
     deck.h \
-    pile.h
+    pile.h \
+    game.h \
+    spider.h \
+    klondike.h \
+    freecell.h
 
 FORMS    += solwindow.ui
 

@@ -2,7 +2,9 @@
 #define CARD_H
 
 #include <QLabel>
+//#include "game.h"
 class SolWindow;
+class Game;
 class Pile; //use if using pile down below
 class Card : public QLabel
 {
@@ -13,21 +15,21 @@ public:
     Card *operator =(Card *c);
     Card(int val, QString im, bool isBl, int cardSuit, SolWindow *parent);
     void flip();
+    bool isFaceUp;
+    Pile *pileIn;
 private:
     const bool isBlack;
     const int suit;
     const int value;
     const QString front;
     const QString back = ":/Back/CardPics/Back.png";
-    bool isFaceUp;
+
     int posInPile;
-    Pile *pileIn;
+
     //NEW STUFF BELOW THIS
     QPoint offset;
-    SolWindow *gameWindow;
+    Game *theGame;
     Pile * prevPile;
-signals:
-    void clicked();
 
 protected:
     void mousePressEvent(QMouseEvent* event);
@@ -41,7 +43,11 @@ public slots:
 //    void onRClick();
 //    void onLClick();
 friend class Pile;
-friend class Deck;
+//friend class Deck;
+friend class Game;
+friend class Klondike;
+friend class Spider;
+friend class FreeCell;
 };
 
 #endif // CARD_H

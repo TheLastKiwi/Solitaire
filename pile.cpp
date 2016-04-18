@@ -33,9 +33,7 @@ void Pile::addCard(Card *c, bool deck){
 }
 
 Pile::~Pile(){
-    for(int i = 0; i < 52;i++){
-        delete stack[i];
-    }
+    //nothing dynamically allocated
 }
 void Pile::movePile(int xPos, int yPos){
     x=xPos;

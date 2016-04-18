@@ -1,11 +1,7 @@
 #ifndef PILE_H
 #define PILE_H
-
-
 #include "card.h"
-#include <iostream>
 
-//class Card;
 class Pile
 {
 private:
@@ -23,7 +19,10 @@ public:
     void addCard(Card *c, bool deck);
 
     void movePile(int xPos, int yPos);
+    int getX(){return x;}
+    int getY(){return y;}
     Pile(int x, int y);
+    Pile* prev = 0;
     Pile();
     ~Pile();
 
