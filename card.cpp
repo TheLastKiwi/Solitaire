@@ -53,19 +53,26 @@ void Card::mousePressEvent(QMouseEvent* event)
 }
 void Card::mouseMoveEvent(QMouseEvent *ev){                                    //-20 for toolbar
 
-        theGame->drag(ev->windowPos().x() - offset.x(),ev->windowPos().y() - offset.y());
+    theGame->drag(ev->windowPos().x() - offset.x(),ev->windowPos().y() - offset.y());
 }
 
 void Card::mouseReleaseEvent(QMouseEvent *ev){
+    if(theGame->moving->cardsInPile == 0) return;
     Pile *movingTo = theGame->canDrop(ev->windowPos().toPoint());
     if(movingTo){
         theGame->drop(movingTo);
 
-        if(!theGame->moving->prev->isDeck)theGame->flipAfterMove(theGame->moving->prev);
+        if(!theGame->moving->prev->isDeckStyle)theGame->flipAfterMove(theGame->moving->prev);
     }
     else{
         theGame->returnToPile();
     }
+
+}
+void Card::mouseDoubleClickEvent(QMouseEvent *ev){
+
+    theGame->doubleClick(this);
+
 
 }
 

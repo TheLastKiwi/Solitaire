@@ -17,20 +17,6 @@ SolWindow::SolWindow(QWidget *parent) :
     Pal.setColor(QPalette::Background, c);
     setAutoFillBackground(true);
     setPalette(Pal);
-    //
-    //theGame =new FreeCell(this);
-//    deck = new Deck(this);
-//    deck->shuffle(52);
-//    fDown = new Pile(20,30);
-
-
-
-//    //initialize field for 10 piles
-//    for(int i = 20;i < 820; i+=80){
-//        field[i/80] = new Pile(i,111);
-//    }
-
-//    on_actionFreeCell_triggered();
 
 }
 
@@ -45,8 +31,10 @@ void SolWindow::paintEvent(QPaintEvent *event){
 
 void SolWindow::on_actionNew_Game_triggered()
 {
-    if(theGame)theGame->newGame();
-    theGame->setup();
+    if(theGame){
+        theGame->newGame();
+        theGame->setup();
+    }
 }
 
 void SolWindow::on_actionKlondike_triggered()
@@ -83,4 +71,12 @@ void SolWindow::on_actionHard_triggered()
     delete theGame;
     theGame = new Spider(this,2);
     theGame->setup();
+}
+void SolWindow::mousePressEvent(QMouseEvent *ev){
+    if((theGame->gameType == 0)//klondike
+
+
+            ){
+
+    }
 }

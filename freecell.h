@@ -14,6 +14,7 @@ public:
      void winCon(); //Notification when wins.
      void drawBoxes();
      void newGame();
+     void doubleClick(Card *c){}
     FreeCell(SolWindow *gameBoard);
     ~FreeCell();
 };

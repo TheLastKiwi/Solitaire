@@ -10,14 +10,13 @@ private:
     int x;
     int y;
 public:
-    //Moved to public
+
     Card *stack[52];
-    //-------------
+    bool isDeckStyle = false;
     int cardsInPile = 0;
     void moveCard(Pile *toPile, Card *c);
     Card *getTopCard();
     void addCard(Card *c, bool deck);
-
     void movePile(int xPos, int yPos);
     int getX(){return x;}
     int getY(){return y;}

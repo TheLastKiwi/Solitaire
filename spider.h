@@ -5,6 +5,7 @@ class Spider:public Game
 {
 private:
     int difficulty;
+    int suitsComplete = 0;
     //    enum PlayStyle{easy,med,hard};
     //    PlayStyle difficulty;
 public:
@@ -15,6 +16,11 @@ public:
         void winCon(); //Notification when wins.
         void drawBoxes();
         void newGame();
+
+        Pile *tenCardStacks[5]; // 5 in the bottom right
+        Pile *finished[8]; // the 8 finished piles
+
+        void doubleClick(Card *c);
     Spider(SolWindow *gameBoard, int i);
 };
 

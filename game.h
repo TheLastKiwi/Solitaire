@@ -11,7 +11,7 @@ class Game
 {
 public:
     SolWindow *board;
-
+    int gameType = 0; //0 = klondike, 1 = spider, 2 = freecell
     Deck *deck = 0;
     Pile *fDown = new Pile(-100,-100);
     Pile *field[10];
@@ -64,6 +64,7 @@ public:
 
         }
     }
+    virtual void doubleClick(Card *c) = 0;
     void flipAfterMove(Pile *p){
         if(p->cardsInPile>0){
             if(!p->getTopCard()->isFaceUp)p->getTopCard()->flip();

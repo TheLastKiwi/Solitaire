@@ -15,6 +15,7 @@ void Klondike::setup(){//inital field
     }
 
     fDown->movePile(20,30); //moves deck to top left
+    fDown->isDeckStyle = true;
 
     //sets window size and title
     board->setWindowTitle("Klondike");

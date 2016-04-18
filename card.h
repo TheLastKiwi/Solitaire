@@ -33,10 +33,9 @@ private:
 
 protected:
     void mousePressEvent(QMouseEvent* event);
-    //NEW STUFF BELOW THIS
     void mouseMoveEvent(QMouseEvent *ev);
     void mouseReleaseEvent(QMouseEvent *ev);
-
+    void mouseDoubleClickEvent(QMouseEvent *ev);
 public slots:
 //    void onClick();
     //DELETED STUFF BELOW THIS
